@@ -1,0 +1,7 @@
+Next release
+------------
+
+0.1 (2011-01-04)
+----------------
+
+- Added an authentication policy specifc to ``repoze.who >= 2.0dev``.

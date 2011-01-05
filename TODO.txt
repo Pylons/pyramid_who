@@ -1,0 +1,11 @@
+``pyramid_who`` TODOs
+=====================
+
+- [X] Implement :class:`pyramid.interfaces.IAuthenticationPolicy` using
+      the :mod:`repoze.who` 2.0 API.
+
+- [_] Implement a custom ZCML directive which configures the policy.
+
+- [X] Document configuring the policy via imperative Python.
+
+- [X] Document configuring the policy via ZCML.
