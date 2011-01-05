@@ -40,11 +40,17 @@ or via ZCML:
 .. code-block:: xml
    :linenos:
 
+   <include
+    package="pyramid_who"
+    file="meta.zcml"
+    />
+
    <whov2authenticatonpolicy
     config_file="/path/to/who.ini"
     identifier_id="auth_tkt"
     callback="my_package.users.verify_user"
     />
+
 
 ``config_file``
     A fully-qualified path to a :mod:`repoze.who` configuration file.
