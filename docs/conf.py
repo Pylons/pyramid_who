@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pyramid_viewgroup documentation build configuration file
+# pyramid_who documentation build configuration file
 #
 # This file is execfile()d with the current directory set to its containing
 # dir.
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General substitutions.
-project = 'pyramid_viewgroup'
+project = 'pyramid_who'
 copyright = '2010, Agendaless Consulting'
 
 # The default replacements for |version| and |release|, also used in various
@@ -96,7 +96,7 @@ pygments_style = 'sphinx'
 # Add and use Pylons theme
 sys.path.append(os.path.abspath('_themes'))
 html_theme_path = ['_themes']
-html_theme = 'pylons'
+html_theme = 'pyramid'
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
@@ -163,7 +163,7 @@ html_last_updated_fmt = '%b %d, %Y'
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'viewgroupdoc'
+htmlhelp_basename = 'whodoc'
 
 
 # Options for LaTeX output
@@ -179,7 +179,7 @@ htmlhelp_basename = 'viewgroupdoc'
 # (source start file, target name, title,
 #  author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'pyramid_viewgroup.tex', 'pyramid_viewgroup Documentation',
+  ('index', 'pyramid_who.tex', 'pyramid_who Documentation',
    'Repoze Developers', 'manual'),
 ]
 
