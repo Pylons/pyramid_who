@@ -19,6 +19,7 @@ Configure the :class:`WhoV2AuthenticationPolicy` into your :mod:`pyramid`
 application via imperative Python code:
 
 .. code-block:: python
+
    import os
 
    from pyramid.authorization import ACLAuthorizationPolicy
@@ -52,17 +53,30 @@ or via ZCML:
     />
 
 
+Configuration Options
+---------------------
+
 ``config_file``
-    A fully-qualified path to a :mod:`repoze.who` configuration file.
+    *Required*.  The path to a :mod:`repoze.who` configuration file.  May
+    include ``~`` or ``${envvar}`` constructs, which will be expanded using
+    :func:`os.path.expanduser` and :func:`os.path.expandvars`, respectively.
+    Relative paths will be made absolute using :func:`os.path.abspath`.
+    If the path does not exist, or points to a non-file, the factory
+    function raises an error.
 
 ``identifier_id``
-    The ID within that file of the :mod:`repoze.who` authentication plugin
-    used to "remember" and "forget" authenticated users.
+    *Required*.  The ID within that file of the :mod:`repoze.who`
+    authentication plugin used to "remember" and "forget" authenticated users.
+    E.g., if the config file configures the stock ``auth_tkt`` plugin ID
+    ``auth_tkt_plugin``, this value should be the string,
+    ``"auth_tkt_plugin"``.
 
 ``callback``
-    A function taking ``identity`` (a :mod:`repoze.who` identity mapping)
-    and ``request``, and returning a sequence of group IDs for the user, if
-    she exists.  If not, the callback must return None.
+    *Optional*.  A function taking ``identity`` (a :mod:`repoze.who` identity
+    mapping) and ``request``, and returning a sequence of group IDs for the
+    user, if she exists.  If not, the callback **must** return None.  If no
+    callback is passed, the policy assumes that the user exists, but has
+    no additional groups.
 
 
 Interaction with :mod:`repoze.who` Middleware

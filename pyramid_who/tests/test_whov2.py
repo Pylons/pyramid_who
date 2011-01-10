@@ -33,15 +33,24 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         from pyramid_who.whov2 import WhoV2AuthenticationPolicy
         return WhoV2AuthenticationPolicy
 
-    def _makeOne(self, callback=None):
+    def _makeFile(self, filename, tempdir=None, text=None):
         import os
-        import tempfile
-        tempdir = self._tempdir = tempfile.mkdtemp()
-        config_file = os.path.join(tempdir, 'who.ini')
-        open(config_file, 'a').close()
+        if tempdir is None:
+            import tempfile
+            tempdir = self._tempdir = tempfile.mkdtemp()
+        result = os.path.join(tempdir, filename)
+        if text is not None:
+            f = open(result, 'w')
+            f.write(text)
+            f.close()
+        return result
+
+    def _makeOne(self, config_file=None, identifier_id='test', callback=None):
+        if config_file is None:
+            config_file = self._makeFile('who.ini', text='')
         if callback is None:
-            return self._getTargetClass()(config_file, 'testing')
-        return self._getTargetClass()(config_file, 'testing', callback)
+            return self._getTargetClass()(config_file, identifier_id)
+        return self._getTargetClass()(config_file, identifier_id, callback)
 
     def _makeRequest(self, **kw):
         from pyramid.testing import DummyRequest
@@ -56,6 +65,13 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         from zope.interface.verify import verifyObject
         from pyramid.interfaces import IAuthenticationPolicy
         verifyObject(IAuthenticationPolicy, self._makeOne())
+
+    def test_ctor_invalid_config_file_name(self):
+        self.assertRaises(Exception, self._makeOne, '/nonesuch')
+
+    def test_ctor_invalid_config_file_content(self):
+        filename = self._makeFile('not-ini.txt', text='this is not an INI file')
+        self.assertRaises(Exception, self._makeOne, filename)
 
     def test_authenticated_userid_no_identity_in_environ(self):
         ENVIRON = {'wsgi.version': '1.0',
@@ -157,7 +173,7 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         policy = self._makeOne()
         self.assertEqual(policy.remember(request, 'phred'), HEADERS)
         self.assertEqual(api._remembered, {'repoze.who.userid': 'phred',
-                                           'identifier': 'testing',
+                                           'identifier': 'test',
                                           })
 
     def test_forget_w_api_in_environ(self):

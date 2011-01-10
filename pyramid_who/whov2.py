@@ -29,7 +29,10 @@ class WhoV2AuthenticationPolicy(object):
 
     def __init__(self, config_file, identifier_id, callback=_null_callback):
         config_file = self._config_file = os.path.abspath(
-                                          os.path.normpath(config_file))
+                                          os.path.normpath(
+                                          os.path.expandvars(
+                                          os.path.expanduser(
+                                            config_file))))
         conf_dir, _ = os.path.split(config_file)
         global_conf = {'here': conf_dir}
         self._api_factory = APIFactory(global_conf, config_file)
