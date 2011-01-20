@@ -107,3 +107,5 @@ Contributors
 ------------
 
 - Tres Seaver, 2011/01/04
+
+- Chris McDonough, 2011/01/20

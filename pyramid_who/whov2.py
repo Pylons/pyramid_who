@@ -39,6 +39,9 @@ class WhoV2AuthenticationPolicy(object):
         self._identifier_id = identifier_id
         self._callback = callback
 
+    def unauthenticated_userid(self, request):
+        return self._get_identity(request)
+
     def authenticated_userid(self, request):
         """ See IAuthenticationPolicy.
         """

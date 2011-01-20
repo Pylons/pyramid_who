@@ -73,6 +73,23 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         filename = self._makeFile('not-ini.txt', text='this is not an INI file')
         self.assertRaises(Exception, self._makeOne, filename)
 
+    def test_unauthenticated_userid_no_identity_in_environ(self):
+        ENVIRON = {'wsgi.version': '1.0',
+                   'HTTP_USER_AGENT': 'testing',
+                  }
+        request = self._makeRequest(environ=ENVIRON)
+        policy = self._makeOne()
+        self.assertEqual(policy.unauthenticated_userid(request), None)
+
+    def test_unauthenticated_userid_w_api_in_environ(self):
+        ENVIRON = {'wsgi.version': '1.0',
+                   'HTTP_USER_AGENT': 'testing',
+                   'repoze.who.api': DummyAPI('phred'),
+                  }
+        request = self._makeRequest(environ=ENVIRON)
+        policy = self._makeOne()
+        self.assertEqual(policy.unauthenticated_userid(request), 'phred')
+
     def test_authenticated_userid_no_identity_in_environ(self):
         ENVIRON = {'wsgi.version': '1.0',
                    'HTTP_USER_AGENT': 'testing',
