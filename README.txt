@@ -1,5 +1,5 @@
-pyramid_who
-===========
+``pyramid_who``
+===============
 
 ``pyramid_who`` is an extension for the ``pyramid`` web framework, providing
 an authentication policy based on the "new" ``repoze.who`` API, as found in

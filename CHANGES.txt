@@ -1,10 +1,15 @@
-Next release
-------------
+``pyramid_who`` Changelog
+=========================
+
+
+0.1 (2011-02-18)
+----------------
 
 - Add ``unauthenticated_userid`` method to whov2 authentication policy to
   appease Pyramid IAuthenticationPolicy interface.
 
-0.1 (2011-01-10)
+
+0.0 (2011-01-10)
 ----------------
 
 - Initial public version.
