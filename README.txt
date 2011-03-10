@@ -5,4 +5,4 @@
 an authentication policy based on the "new" ``repoze.who`` API, as found in
 version 2.0 and greater.
 
-For more information see http://docs.pylonshq.com/pyramid_who/dev/
+For more information see http://docs.pylonsproject.org/projects/pyramid_who/dev/
