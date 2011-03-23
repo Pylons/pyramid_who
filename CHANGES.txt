@@ -4,6 +4,11 @@
 Unreleased
 ----------
 
+- Fixed test of ``unauthenticated_userid``.
+
+- Fixed tests broken by ``repoze.who`` changes (relaxing exceptions to
+  warnings for missing / invalid config rile).
+
 - Fixed URL to docs in README.txt.  Thanks to Łukasz Fidosz.
 
 
