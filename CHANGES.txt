@@ -1,6 +1,11 @@
 ``pyramid_who`` Changelog
 =========================
 
+Unreleased
+----------
+
+- Fixed URL to docs in README.txt.  Thanks to Łukasz Fidosz.
+
 
 0.1 (2011-02-18)
 ----------------
