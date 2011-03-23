@@ -1,8 +1,8 @@
 ``pyramid_who`` Changelog
 =========================
 
-Unreleased
-----------
+0.2 (2011-03-23)
+----------------
 
 - Pass the identifier plugin to ``api.remember``, rather than its name,
   as required by the interface.  Fixes
