@@ -4,6 +4,10 @@
 Unreleased
 ----------
 
+- Pass the identifier plugin to ``api.remember``, rather than its name,
+  as required by the interface.  Fixes
+  https://github.com/Pylons/pyramid_who/issues#issue/2
+
 - Fixed test of ``unauthenticated_userid``.
 
 - Fixed tests broken by ``repoze.who`` changes (relaxing exceptions to

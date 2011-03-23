@@ -69,7 +69,7 @@ class WhoV2AuthenticationPolicy(object):
         """
         api = self._getAPI(request)
         identity = {'repoze.who.userid': principal,
-                    'identifier': self._identifier_id,
+                    'identifier': api.name_registry[self._identifier_id],
                    }
         return api.remember(identity)
 

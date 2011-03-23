@@ -188,6 +188,7 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
     def test_remember_w_api_in_environ(self):
         HEADERS = [('Fruit', 'Basket')]
         api = DummyAPI(headers=HEADERS)
+        api.name_registry['test'] = identifier = object()
         ENVIRON = {'wsgi.version': '1.0',
                    'HTTP_USER_AGENT': 'testing',
                    'repoze.who.api': api,
@@ -195,9 +196,8 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         request = self._makeRequest(environ=ENVIRON)
         policy = self._makeOne()
         self.assertEqual(policy.remember(request, 'phred'), HEADERS)
-        self.assertEqual(api._remembered, {'repoze.who.userid': 'phred',
-                                           'identifier': 'test',
-                                          })
+        self.assertEqual(api._remembered['repoze.who.userid'], 'phred')
+        self.failUnless(api._remembered['identifier'] is identifier)
 
     def test_forget_w_api_in_environ(self):
         HEADERS = [('Fruit', 'Basket')]
@@ -217,6 +217,7 @@ class DummyAPI:
     def __init__(self, authenticated=None, headers=()):
         self._authenticated = authenticated
         self._headers = headers
+        self.name_registry = {}
 
     def authenticate(self):
         if self._authenticated is not None:
