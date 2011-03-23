@@ -5,3 +5,4 @@ docs/_build
 env26/
 dist/
 docs/_themes
+venv
