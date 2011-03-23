@@ -67,11 +67,17 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         verifyObject(IAuthenticationPolicy, self._makeOne())
 
     def test_ctor_invalid_config_file_name(self):
-        self.assertRaises(Exception, self._makeOne, '/nonesuch')
+        import warnings
+        with warnings.catch_warnings(record=True) as log:
+            policy = self._makeOne('/nonesuch')
+            self.assertEqual(len(log), 1)
 
     def test_ctor_invalid_config_file_content(self):
+        import warnings
         filename = self._makeFile('not-ini.txt', text='this is not an INI file')
-        self.assertRaises(Exception, self._makeOne, filename)
+        with warnings.catch_warnings(record=True) as log:
+            policy = self._makeOne(filename)
+            self.assertEqual(len(log), 1)
 
     def test_unauthenticated_userid_no_identity_in_environ(self):
         ENVIRON = {'wsgi.version': '1.0',
