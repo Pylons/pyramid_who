@@ -1,6 +1,13 @@
 ``pyramid_who`` Changelog
 =========================
 
+Unreleased
+----------
+
+- Added a "challenge decider" function for use by ``repoze.who`` with
+  current versions of ``pyramid``, which now return "403 Forbidden" instead
+  of "401 Unauthorized" on authorization failures.
+
 0.2 (2011-03-23)
 ----------------
 
