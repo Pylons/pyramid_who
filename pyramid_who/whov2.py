@@ -18,7 +18,7 @@ from zope.interface import implements
 from pyramid.interfaces import IAuthenticationPolicy
 from pyramid.security import Authenticated
 from pyramid.security import Everyone
-from repoze.who.config import make_api_factory_with_config as APIFactory
+from repoze.who.config import make_api_factory_with_config
 
 
 def _null_callback(identity, request):
@@ -35,7 +35,8 @@ class WhoV2AuthenticationPolicy(object):
                                             config_file))))
         conf_dir, _ = os.path.split(config_file)
         global_conf = {'here': conf_dir}
-        self._api_factory = APIFactory(global_conf, config_file)
+        self._api_factory = make_api_factory_with_config(global_conf,
+                                                         config_file)
         self._identifier_id = identifier_id
         self._callback = callback
 
@@ -68,7 +69,7 @@ class WhoV2AuthenticationPolicy(object):
         """
         api = self._getAPI(request)
         identity = {'repoze.who.userid': principal,
-                    'identifier': self._identifier_id,
+                    'identifier': api.name_registry[self._identifier_id],
                    }
         return api.remember(identity)
 

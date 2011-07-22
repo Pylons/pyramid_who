@@ -1,12 +1,38 @@
-Next release
-------------
+``pyramid_who`` Changelog
+=========================
+
+Unreleased
+----------
+
+- Added a "challenge decider" function for use by ``repoze.who`` with
+  current versions of ``pyramid``, which now return "403 Forbidden" instead
+  of "401 Unauthorized" on authorization failures.
+
+0.2 (2011-03-23)
+----------------
+
+- Pass the identifier plugin to ``api.remember``, rather than its name,
+  as required by the interface.  Fixes
+  https://github.com/Pylons/pyramid_who/issues#issue/2
+
+- Fixed test of ``unauthenticated_userid``.
+
+- Fixed tests broken by ``repoze.who`` changes (relaxing exceptions to
+  warnings for missing / invalid config rile).
+
+- Fixed URL to docs in README.txt.  Thanks to Łukasz Fidosz.
+
+
+0.1 (2011-02-18)
+----------------
 
 - Add ``unauthenticated_userid`` method to whov2 authentication policy to
   appease Pyramid 1.0 IAuthenticationPolicy interface.
 
 - Add a tox.ini file for Jenkins testing.
 
-0.1 (2011-01-10)
+
+0.0 (2011-01-10)
 ----------------
 
 - Initial public version.
