@@ -66,13 +66,6 @@ class WhoV2AuthenticationPolicyTests(unittest.TestCase):
         from pyramid.interfaces import IAuthenticationPolicy
         verifyObject(IAuthenticationPolicy, self._makeOne())
 
-    def test_ctor_invalid_config_file_name(self):
-        self.assertRaises(Exception, self._makeOne, '/nonesuch')
-
-    def test_ctor_invalid_config_file_content(self):
-        filename = self._makeFile('not-ini.txt', text='this is not an INI file')
-        self.assertRaises(Exception, self._makeOne, filename)
-
     def test_unauthenticated_userid_no_identity_in_environ(self):
         ENVIRON = {'wsgi.version': '1.0',
                    'HTTP_USER_AGENT': 'testing',

@@ -40,7 +40,9 @@ class WhoV2AuthenticationPolicy(object):
         self._callback = callback
 
     def unauthenticated_userid(self, request):
-        return self._get_identity(request)
+        identity = self._get_identity(request)
+        if identity is not None:
+            return identity['repoze.who.userid']
 
     def authenticated_userid(self, request):
         """ See IAuthenticationPolicy.
