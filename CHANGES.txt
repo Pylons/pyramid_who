@@ -2,7 +2,9 @@ Next release
 ------------
 
 - Add ``unauthenticated_userid`` method to whov2 authentication policy to
-  appease Pyramid IAuthenticationPolicy interface.
+  appease Pyramid 1.0 IAuthenticationPolicy interface.
+
+- Add a tox.ini file for Jenkins testing.
 
 0.1 (2011-01-10)
 ----------------
