@@ -8,6 +8,8 @@ Unreleased
   current versions of ``pyramid``, which now return "403 Forbidden" instead
   of "401 Unauthorized" on authorization failures.
 
+- Add tox.ini for Jenkins testing.
+
 0.2 (2011-03-23)
 ----------------
 
