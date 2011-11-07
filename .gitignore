@@ -8,5 +8,5 @@ dist/
 .tox/
 nosetests.xml
 coverage.xml
-docs/_themes
 venv
+*.egg
