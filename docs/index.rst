@@ -27,7 +27,7 @@ application via imperative Python code:
    from pyramid_who.whov2 import WhoV2AuthenticationPolicy
    from my_package.users import verify_user
 
-   config_file = '/path/towho.ini'
+   config_file = '/path/to/who.ini'
    identifier_id = 'auth_tkt'
    authentication_policy = WhoV2AuthenticationPolicy(config_file,
                                                      identifier_id,
