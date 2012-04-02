@@ -43,6 +43,7 @@ setup(name='pyramid_who',
       include_package_data=True,
       zip_safe=False,
       tests_require = ['pyramid',
+                       'pyramid_zcml',
                        'repoze.who',
                       ],
       install_requires=['pyramid',
@@ -50,6 +51,8 @@ setup(name='pyramid_who',
                        ],
       test_suite="pyramid_who",
       entry_points = """\
-      """
-      )
-
+      """,
+      extras_require = {
+        'zcml': 'pyramid_zcml',
+      },
+)
