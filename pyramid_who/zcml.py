@@ -3,9 +3,7 @@ from zope.interface import Interface
 from zope.schema import ASCIILine
 from zope.schema import TextLine
 
-from pyramid.config import Configurator
 from pyramid_who.whov2 import WhoV2AuthenticationPolicy
-
 
 class IRepozeWho2AuthenticationPolicyDirective(Interface):
     config_file = ASCIILine(title=u'config_file', required=True)
@@ -22,7 +20,6 @@ def repozewho2authenticationpolicy(_context,
     else:
         policy = WhoV2AuthenticationPolicy(config_file, identifier_name,
                                            callback=callback)
-    # authentication policies must be registered eagerly so they can
-    # be found by the view registration machinery
-    config = Configurator.with_context(_context)
-    config._set_authentication_policy(policy)
+    from pyramid_zcml import with_context
+    config = with_context(_context)
+    config.set_authentication_policy(policy)

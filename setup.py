@@ -55,5 +55,6 @@ setup(name='pyramid_who',
       extras_require = {
         'zcml': 'pyramid_zcml',
         'testing': ['nose', 'coverage'],
+        'docs':['Sphinx'],
       },
 )

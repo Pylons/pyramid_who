@@ -1,14 +1,13 @@
 import unittest
 
 
-class TestRepozeWhowAuthenticationPolicyDirective(unittest.TestCase):
+class TestRepozeWhoAuthenticationPolicyDirective(unittest.TestCase):
 
     _tempdir = None
 
     def setUp(self):
         from pyramid.testing import setUp
         self.config = setUp(autocommit=False)
-        self.config._ctx = self.config._make_context()
 
     def tearDown(self):
         from pyramid.testing import tearDown
@@ -44,51 +43,55 @@ class TestRepozeWhowAuthenticationPolicyDirective(unittest.TestCase):
     def test_it_defaults(self):
         from pyramid.interfaces import IAuthenticationPolicy
         from pyramid_who.whov2 import _null_callback
-        reg = self.config.registry
-        context = self.config._ctx
+        self.config._set_authorization_policy(object())
+        context = DummyZCMLContext(self.config)
         self._callFUT(context)
-        actions = extract_actions(context.actions)
+        actions = context.actions
         self.assertEqual(len(actions), 1)
         regadapt = actions[0]
         self.assertEqual(regadapt['discriminator'], IAuthenticationPolicy)
-        self.assertEqual(regadapt['callable'], None)
         self.assertEqual(regadapt['args'], ())
+        regadapt['callable']()
+        reg = self.config.registry
         policy = reg.getUtility(IAuthenticationPolicy)
         self.assertEqual(policy._identifier_id, 'IDENTIFIER')
         self.assertEqual(policy._callback, _null_callback)
 
     def test_it(self):
-        reg = self.config.registry
         from pyramid.interfaces import IAuthenticationPolicy
-        context = self.config._ctx
+        context = DummyZCMLContext(self.config)
+        self.config._set_authorization_policy(object())
         def _callback(identity, request):
             """ """ # hide from coverage
         config_file = self._makeWhoConfig('firstbase.ini')
-        self._callFUT(context, config_file,
-                      'something', _callback)
-        actions = extract_actions(context.actions)
+        self._callFUT(context, config_file, 'something', _callback)
+        actions = context.actions
         self.assertEqual(len(actions), 1)
         regadapt = actions[0]
         self.assertEqual(regadapt['discriminator'], IAuthenticationPolicy)
-        self.assertEqual(regadapt['callable'], None)
         self.assertEqual(regadapt['args'], ())
+        regadapt['callable']()
+        reg = self.config.registry
         policy = reg.getUtility(IAuthenticationPolicy)
         self.assertEqual(policy._config_file, config_file)
         self.assertEqual(policy._identifier_id, 'something')
         self.assertEqual(policy._callback, _callback)
 
+from pyramid.config import Configurator
 
-def extract_actions(native):
-    from zope.configuration.config import expand_action
-    L = []
-    for action in native:
-        (discriminator, callable, args, kw, includepath, info, order
-         ) = expand_action(*action)
-        d = {}
-        d['discriminator'] = discriminator
-        d['callable'] = callable
-        d['args'] = args
-        d['kw'] = kw
-        d['order'] = order
-        L.append(d)
-    return L
+class DummyZCMLContext(object):
+    config_class = Configurator
+    introspection = False
+    def __init__(self, config):
+        self.registry = config.registry
+        self.package = config.package
+        self.autocommit = config.autocommit
+        self.route_prefix = getattr(config, 'route_prefix', None)
+        self.basepath = getattr(config, 'basepath', None)
+        self.includepath = getattr(config, 'includepath', ())
+        self.info = getattr(config, 'info', '')
+        self.actions = config._ctx.actions
+        self._ctx = config._ctx
+
+    def action(self, *arg, **kw): # pragma: no cover
+        self._ctx.action(*arg, **kw)

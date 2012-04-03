@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
+SPHINXOPTS    = -W
 SPHINXBUILD   = sphinx-build
 PAPER         =
 
@@ -25,11 +25,17 @@ help:
 clean:
 	-rm -rf _build/*
 
-html: _themes
+html:
 	mkdir -p _build/html _build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
+
+text:
+	mkdir -p _build/text _build/doctrees
+	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) _build/text
+	@echo
+	@echo "Build finished. The HTML pages are in _build/text."
 
 pickle:
 	mkdir -p _build/pickle _build/doctrees
@@ -41,7 +47,7 @@ pickle:
 
 web: pickle
 
-htmlhelp: _themes
+htmlhelp:
 	mkdir -p _build/htmlhelp _build/doctrees
 	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) _build/htmlhelp
 	@echo
@@ -51,6 +57,10 @@ htmlhelp: _themes
 latex:
 	mkdir -p _build/latex _build/doctrees
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
+	cp _static/*.png _build/latex
+	./convert_images.sh
+	cp _static/latex-warning.png _build/latex
+	cp _static/latex-note.png _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in _build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
@@ -69,5 +79,8 @@ linkcheck:
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in _build/linkcheck/output.txt."
 
-_themes:
-	cd ..; git submodule update --init; cd docs
+epub:
+	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) _build/epub
+	@echo
+	@echo "Build finished. The epub file is in _build/epub."
+
